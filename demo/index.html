@@ -100,7 +100,6 @@
 				var Demo = function() {
 					var self = this;
 
-
 					self.opts = {
 						value: ko.observable(),
 						showCalendar: true,
@@ -110,36 +109,19 @@
 						militaryTime: false
 					};
 
-
-
 					var defaultDate = new Date();		
 					self.startDate = ko.observable(defaultDate.getTime());
 					self.endDate = ko.observable(defaultDate.getTime());
-
-
 
 					self.toDateString = function(date) {
 						if (!date) {
 							return '';
 						}
-						var currTime = date.getTime();
-						if (currTime <= self.absMinTime || currTime >= self.absMaxTime) {
-							return '';
-						}
-						return date.toLocaleString(navigator.language, {
-							timeZoneName: 'short',
-							weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-							hour: '2-digit', minute: '2-digit'
-						});
+						return date.toString();
 					};
-
-
-
-
 
 					self.selStartDateAndTime = ko.observable(self.toDateString(defaultDate));
 					self.startCalendarOpts = {value: ko.observable(), autoclose: false};
-
 
 					self.startCalendarOpts.value.subscribe(function(newDate) {
 						if (newDate === null || !(newDate instanceof Date)) {
@@ -150,7 +132,6 @@
 						self.selStartDateAndTime(viewDate);
 						self.startDate(newDate.getTime());
 					});
-
 
 				};
 				var instance = window.instance = new Demo();
