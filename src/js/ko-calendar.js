@@ -491,9 +491,7 @@
 
             // Position Calendar
             ko.utils.registerEventHandler(el, 'focus', function(e) {
-            
-            		cal.style.opacity = '0';
-
+                cal.style.opacity = '0';
                 // Push this to the end of the stack so we can get the cal width
                 setTimeout(function() {
                     var offset = instance.utils.element.offset(el);
