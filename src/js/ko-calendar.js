@@ -52,6 +52,8 @@
 
             autoclose: true,
 
+            mondayFirstDayOfWeek: false,
+
             strings: {
                 months: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
                 days: [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
@@ -60,6 +62,10 @@
         };
 
         utils.deepExtend(self.opts, params);
+
+        if (self.opts.mondayFirstDayOfWeek) {
+            self.opts.strings.days.push(self.opts.strings.days.shift());
+        }
 
         if(!self.opts.showCalendar && !self.opts.showTime) {
             return console.error('Silly goose, what are you using ko-%s for?', binding);
@@ -284,7 +290,7 @@
                 // Current month set to the first day
                 var normalized = self.utils.date.normalize(self.current());
                 normalized.setDate(1);
-                normalized.setDate(normalized.getDate() - normalized.getDay()); // Set our date to the first day of the week from the normalized month
+                normalized.setDate(normalized.getDate() - normalized.getDay() + (self.opts.mondayFirstDayOfWeek ? 1 : 0)); // Set our date to the first day of the week from the normalized month
 
                 var weeks = [];
                 var week = 0;
