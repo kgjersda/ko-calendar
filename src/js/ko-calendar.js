@@ -32,6 +32,8 @@
     var Model = function(params) {
         var self = this;
 
+        self.id = 'ko-calendar-' + (Date.parse(new Date()) + parseInt(Math.random() * 10000));
+
         self.opts = {
             value: ko.observable(),
             current: new Date(),
@@ -558,7 +560,11 @@
             cal = el.children[0]; // The first node in our Template
         }
 
+        cal.id = instance.id;
+
         ko.applyBindings(instance, cal);
+
+        return instance;
     };
 
     // Component
@@ -571,7 +577,11 @@
     ko.bindingHandlers[binding] = {
         init: function(el, opts) {
 
-            applyCalendar(el, ko.unwrap(opts()));
+            var instance = applyCalendar(el, ko.unwrap(opts()));
+
+            ko.utils.domNodeDisposal.addDisposeCallback(el, function () {
+                document.getElementById(instance.id).remove();
+            });
 
             return {
                 controlsDescendantBindings: true
